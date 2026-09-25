@@ -114,13 +114,21 @@ function asset(path) {
   return `${basePath}/${path}`.replace("//", "/");
 }
 
+function postPath(post) {
+  return `/post/${post.id}`;
+}
+
+function findPostById(id) {
+  return posts.find((post) => post.id === id);
+}
+
 function renderApp() {
   const path = currentPath();
-  const route = routes.get(path) || renderNotFound;
+  const route = path.startsWith("/post/") ? renderPostDetail : routes.get(path) || renderNotFound;
   app.innerHTML = `
     ${renderHeader()}
     <main id="conteudo" tabindex="-1">
-      ${route()}
+      ${route(path)}
     </main>
     ${renderFooter()}
   `;
@@ -282,9 +290,12 @@ function renderCarousel(items) {
             <span>${activePost.readTime}</span>
             <span>${formatViews(activePost.views)} visitas</span>
           </div>
-          <a class="button button-primary" href="${activePost.affiliateUrl}" target="_blank" rel="nofollow sponsored noopener">
-            Ver oferta indicada
-          </a>
+          <div class="hero-actions">
+            <a class="button button-primary" href="${withBase(postPath(activePost))}" data-link>Ler review</a>
+            <a class="button button-secondary" href="${activePost.affiliateUrl}" target="_blank" rel="nofollow sponsored noopener">
+              Ver oferta
+            </a>
+          </div>
         </div>
       </article>
       <div class="carousel-dots" aria-label="Posts no carrossel">
@@ -305,18 +316,19 @@ function renderPostCard(post) {
   const category = categoryById(post.categoryId);
   return `
     <article class="post-card">
-      <a href="${post.affiliateUrl}" target="_blank" rel="nofollow sponsored noopener" aria-label="Abrir oferta indicada para ${post.title}">
+      <a href="${withBase(postPath(post))}" data-link aria-label="Ler review: ${post.title}">
         <img src="${asset(post.image)}" alt="" loading="lazy" />
       </a>
       <div class="post-card-body">
         <span class="category-pill" style="--pill-color: ${category.color}">${category.name}</span>
-        <h3>${post.title}</h3>
+        <h3><a href="${withBase(postPath(post))}" data-link>${post.title}</a></h3>
         <p>${post.excerpt}</p>
         <div class="post-meta">
           <span>${formatDate(post.date)}</span>
           <span>★ ${post.rating.toFixed(1)}</span>
           <span>${formatViews(post.views)} visitas</span>
         </div>
+        <a class="text-link" href="${withBase(postPath(post))}" data-link>Ler análise</a>
       </div>
     </article>
   `;
@@ -350,7 +362,7 @@ function renderSidebar() {
           ${recent
             .map(
               (post) => `
-                <a href="${withBase(`/busca?q=${encodeURIComponent(post.title)}`)}" data-link>
+                <a href="${withBase(postPath(post))}" data-link>
                   <img src="${asset(post.image)}" alt="" loading="lazy" />
                   <span>
                     <strong>${post.title}</strong>
@@ -364,6 +376,194 @@ function renderSidebar() {
       </section>
     </aside>
   `;
+}
+
+function renderPostDetail(path) {
+  const postId = path.replace("/post/", "");
+  const post = findPostById(postId);
+  if (!post) return renderNotFound();
+
+  const category = categoryById(post.categoryId);
+  setMeta(`${post.title} | Guia: Compre Sem Erro`, post.excerpt);
+
+  return `
+    <article class="container article-page" data-post-detail="${post.id}">
+      <nav class="breadcrumb" aria-label="Caminho">
+        <a href="${withBase("/")}" data-link>Home</a>
+        <span>/</span>
+        <a href="${withBase(`/busca?q=${encodeURIComponent(category.name)}`)}" data-link>${category.name}</a>
+      </nav>
+      <header class="article-header">
+        <span class="category-pill" style="--pill-color: ${category.color}">${category.name}</span>
+        <h1>${post.title}</h1>
+        <p>${post.excerpt}</p>
+        <div class="post-meta">
+          <span>${formatDate(post.date)}</span>
+          <span>${post.readTime}</span>
+          <span>★ ${post.rating.toFixed(1)}</span>
+          <span>${formatViews(post.views)} avaliações/visitas</span>
+        </div>
+      </header>
+      <div class="article-hero">
+        <img src="${asset(post.image)}" alt="Ilustração do review: ${post.title}" />
+      </div>
+      <div class="article-layout">
+        <div class="article-body" data-article-body>
+          ${post.contentPath ? renderArticleLoading() : renderFallbackArticle(post)}
+        </div>
+        <aside class="article-aside" aria-label="Resumo e oferta">
+          <div class="sidebar-panel">
+            <h2>Resumo</h2>
+            <p>${post.excerpt}</p>
+            <a class="button button-primary" href="${post.affiliateUrl}" target="_blank" rel="nofollow sponsored noopener">
+              Ver oferta indicada
+            </a>
+            <p class="affiliate-note">Podemos receber comissão por compras feitas pelo link, sem custo extra para você.</p>
+          </div>
+        </aside>
+      </div>
+    </article>
+  `;
+}
+
+function renderArticleLoading() {
+  return `
+    <div class="empty-state">
+      <h2>Carregando review</h2>
+      <p>Buscando o conteúdo completo do post.</p>
+    </div>
+  `;
+}
+
+function renderFallbackArticle(post) {
+  return `
+    <h2>Resumo do review</h2>
+    <p>${post.excerpt}</p>
+    <p>Este post ainda não tem texto completo em Markdown. O card já está disponível na busca e nas listas do site.</p>
+  `;
+}
+
+async function loadPostContent(path) {
+  const postId = path.replace("/post/", "");
+  const post = findPostById(postId);
+  const articleBody = document.querySelector("[data-article-body]");
+  if (!post?.contentPath || !articleBody) return;
+
+  try {
+    const response = await fetch(asset(post.contentPath));
+    if (!response.ok) throw new Error("Conteudo indisponivel");
+    const markdown = await response.text();
+    articleBody.innerHTML = markdownToHtml(markdown);
+  } catch {
+    articleBody.innerHTML = `
+      <div class="empty-state">
+        <h2>Não foi possível carregar o review completo</h2>
+        <p>O resumo continua disponível, mas o arquivo de conteúdo não respondeu agora.</p>
+      </div>
+    `;
+  }
+}
+
+function markdownToHtml(markdown) {
+  const body = markdown.replace(/^---[\s\S]*?---\s*/, "").trim();
+  const lines = body.split(/\r?\n/);
+  const html = [];
+  let index = 0;
+
+  while (index < lines.length) {
+    const line = lines[index].trim();
+    if (!line) {
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith("## ")) {
+      html.push(`<h2>${renderInline(line.slice(3))}</h2>`);
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith("# ")) {
+      html.push(`<h1>${renderInline(line.slice(2))}</h1>`);
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith("- ")) {
+      const items = [];
+      while (lines[index]?.trim().startsWith("- ")) {
+        items.push(`<li>${renderInline(lines[index].trim().slice(2))}</li>`);
+        index += 1;
+      }
+      html.push(`<ul>${items.join("")}</ul>`);
+      continue;
+    }
+
+    if (line.startsWith("|") && lines[index + 1]?.includes("---")) {
+      const headers = splitTableRow(line);
+      index += 2;
+      const rows = [];
+      while (lines[index]?.trim().startsWith("|")) {
+        rows.push(splitTableRow(lines[index].trim()));
+        index += 1;
+      }
+      html.push(renderTable(headers, rows));
+      continue;
+    }
+
+    const paragraphs = [line];
+    index += 1;
+    while (
+      lines[index]?.trim() &&
+      !lines[index].trim().startsWith("#") &&
+      !lines[index].trim().startsWith("- ") &&
+      !lines[index].trim().startsWith("|")
+    ) {
+      paragraphs.push(lines[index].trim());
+      index += 1;
+    }
+    html.push(`<p>${renderInline(paragraphs.join(" "))}</p>`);
+  }
+
+  return html.join("");
+}
+
+function splitTableRow(line) {
+  return line
+    .split("|")
+    .slice(1, -1)
+    .map((cell) => cell.trim());
+}
+
+function renderTable(headers, rows) {
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead><tr>${headers.map((header) => `<th>${renderInline(header)}</th>`).join("")}</tr></thead>
+        <tbody>
+          ${rows.map((row) => `<tr>${row.map((cell) => `<td>${renderInline(cell)}</td>`).join("")}</tr>`).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function renderInline(value) {
+  return escapeHtml(value)
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(
+      /(https?:\/\/[^\s]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
 }
 
 function renderSearch() {
@@ -594,6 +794,7 @@ function bindSearch() {
 function bindRouteBehaviors(path) {
   bindCarousel();
   bindContactForm();
+  if (path.startsWith("/post/")) loadPostContent(path);
   if (path === "/configuracoes") bindSettingsForm();
 }
 

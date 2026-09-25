@@ -33,6 +33,24 @@ export const categories = [
 
 export const posts = [
   {
+    id: "tanquinho-colormaq-lcs-10kg",
+    title: "Tanquinho Colormaq LCS 10kg vale a pena? Review para lavanderias compactas",
+    excerpt:
+      "Analisamos capacidade, consumo, programas de lavagem e avaliações de usuários para entender se o modelo é uma boa compra.",
+    categoryId: "casa",
+    author: "Equipe Guia",
+    date: "2026-09-25",
+    readTime: "8 min",
+    views: 7718,
+    rating: 4.7,
+    image: "assets/products/tanquinho-colormaq.svg",
+    contentPath: "posts/tanquinho-colormaq-lcs-10kg.md",
+    affiliateUrl:
+      "https://www.mercadolivre.com.br/tanquinho-colormaq-lavadora-roupas-semi-automatica-lcs-10kg-cor-prata/p/MLB14815390?pdp_filters=deal%3AMLB1578289-1&extra_comm=false&brand_comm=false#polycard_client=affiliates&wid=MLB6136385922&sid=affiliates",
+    tags: ["tanquinho", "lavanderia", "colormaq", "10kg", "casa"],
+    featured: true
+  },
+  {
     id: "fone-bluetooth-cancelamento-ruido",
     title: "Fone Bluetooth com cancelamento de ruido: o que observar antes de comprar",
     excerpt:

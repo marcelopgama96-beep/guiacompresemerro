@@ -146,7 +146,8 @@ button {
 
 .nav-link:hover,
 .nav-link.is-active,
-.site-footer a:not(.brand):hover {
+.site-footer a:not(.brand):hover,
+.text-link:hover {
   color: var(--teal);
 }
 
@@ -665,6 +666,131 @@ button {
   font-weight: 900;
 }
 
+.text-link {
+  color: var(--teal-dark);
+  font-weight: 900;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.breadcrumb a:hover {
+  color: var(--teal);
+}
+
+.article-page {
+  padding: 42px 0 64px;
+}
+
+.article-header {
+  max-width: 900px;
+}
+
+.article-header h1 {
+  margin: 14px 0;
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  line-height: 1;
+}
+
+.article-header > p {
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+
+.article-hero {
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  margin: 28px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #edf7f5, #fff8e8);
+  box-shadow: var(--shadow);
+}
+
+.article-hero img {
+  width: min(420px, 88%);
+}
+
+.article-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+.article-body {
+  max-width: 780px;
+}
+
+.article-body h1 {
+  display: none;
+}
+
+.article-body h2 {
+  margin: 34px 0 12px;
+  font-size: 1.55rem;
+  line-height: 1.18;
+}
+
+.article-body p,
+.article-body li,
+.affiliate-note {
+  color: #40535a;
+}
+
+.article-body a {
+  color: var(--teal-dark);
+  font-weight: 800;
+  word-break: break-word;
+}
+
+.article-body ul {
+  padding-left: 22px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 18px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+.article-body th,
+.article-body td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-body th {
+  background: var(--surface-soft);
+  color: var(--ink);
+}
+
+.article-aside {
+  position: sticky;
+  top: 100px;
+}
+
+.affiliate-note {
+  margin-bottom: 0;
+  font-size: 0.92rem;
+}
+
 .empty-state {
   grid-column: 1 / -1;
   padding: 26px;
@@ -716,12 +842,17 @@ button {
 
   .hero-grid,
   .page-layout,
+  .article-layout,
   .contact-grid,
   .footer-grid {
     grid-template-columns: 1fr;
   }
 
   .sidebar {
+    position: static;
+  }
+
+  .article-aside {
     position: static;
   }
 

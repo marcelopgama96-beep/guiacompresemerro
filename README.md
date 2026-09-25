@@ -29,6 +29,21 @@ O arquivo `404.html` replica a entrada principal para permitir que rotas como `/
 
 Abra `index.html` em um navegador moderno ou use a propria URL publicada pelo GitHub Pages. Como o site usa modulos JavaScript, a visualizacao mais fiel sera pelo GitHub Pages.
 
+## Como gerenciar posts
+
+Os cards dos posts ficam em `src/data/posts.js`. Posts completos podem ficar em arquivos Markdown dentro da pasta `posts/`.
+
+Para criar um review completo:
+
+1. Adicione um arquivo em `posts/`, por exemplo `posts/nome-do-produto.md`.
+2. Cadastre o resumo em `src/data/posts.js`.
+3. No cadastro, preencha `contentPath` apontando para o Markdown, por exemplo `"posts/nome-do-produto.md"`.
+4. Use o link de afiliado em `affiliateUrl`.
+
+O site cria a rota automaticamente no formato:
+
+`/post/id-do-post`
+
 ## Modo DEV
 
 A rota `/configuracoes` aparece no menu e fica acessivel automaticamente em `localhost` ou `127.0.0.1`. Em ambiente publicado, use `?dev=1` apenas para demonstracao temporaria.
@@ -41,6 +56,7 @@ As categorias adicionadas nessa tela sao salvas no `localStorage` do navegador.
 assets/          Logo, favicon e imagens SVG de produtos
 404.html         Fallback de rotas para GitHub Pages
 index.html       Entrada principal do site
+posts/           Reviews completos em Markdown
 src/app.js       Rotas, componentes e interacoes
 src/data/        Posts e categorias de exemplo
 src/styles.css   Identidade visual, responsividade e componentes
