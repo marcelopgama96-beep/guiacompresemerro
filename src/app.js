@@ -111,11 +111,21 @@ function link(path, label, className = "") {
 }
 
 function asset(path) {
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("data:")) return path;
   return `${basePath}/${path}`.replace("//", "/");
 }
 
 function postPath(post) {
   return `/post/${post.id}`;
+}
+
+function postImages(post) {
+  if (Array.isArray(post.gallery) && post.gallery.length) return post.gallery;
+  return [{ src: post.image, alt: `Imagem do review: ${post.title}` }];
+}
+
+function postMainImage(post) {
+  return postImages(post)[0];
 }
 
 function findPostById(id) {
@@ -264,6 +274,7 @@ function renderHome() {
 function renderCarousel(items) {
   const activePost = items[carouselIndex % items.length];
   const category = categoryById(activePost.categoryId);
+  const mainImage = postMainImage(activePost);
 
   return `
     <section class="section-block carousel-block" aria-labelledby="recentes-title">
@@ -279,7 +290,8 @@ function renderCarousel(items) {
       </div>
       <article class="carousel-card" aria-live="polite">
         <div class="carousel-media">
-          <img src="${asset(activePost.image)}" alt="Ilustração do review: ${activePost.title}" />
+          <img src="${asset(mainImage.src)}" alt="${mainImage.alt}" />
+          ${renderCarouselGallery(activePost)}
         </div>
         <div class="carousel-copy">
           <span class="category-pill" style="--pill-color: ${category.color}">${category.name}</span>
@@ -312,12 +324,27 @@ function renderCarousel(items) {
   `;
 }
 
+function renderCarouselGallery(post) {
+  const images = postImages(post);
+  if (images.length <= 1) return "";
+
+  return `
+    <div class="carousel-gallery" aria-label="Imagens do produto">
+      ${images
+        .slice(0, 4)
+        .map((image) => `<img src="${asset(image.src)}" alt="${image.alt}" loading="lazy" />`)
+        .join("")}
+    </div>
+  `;
+}
+
 function renderPostCard(post) {
   const category = categoryById(post.categoryId);
+  const mainImage = postMainImage(post);
   return `
     <article class="post-card">
       <a href="${withBase(postPath(post))}" data-link aria-label="Ler review: ${post.title}">
-        <img src="${asset(post.image)}" alt="" loading="lazy" />
+        <img src="${asset(mainImage.src)}" alt="${mainImage.alt}" loading="lazy" />
       </a>
       <div class="post-card-body">
         <span class="category-pill" style="--pill-color: ${category.color}">${category.name}</span>
@@ -360,17 +387,18 @@ function renderSidebar() {
         <h2>Recentes</h2>
         <div class="mini-post-list">
           ${recent
-            .map(
-              (post) => `
+            .map((post) => {
+              const mainImage = postMainImage(post);
+              return `
                 <a href="${withBase(postPath(post))}" data-link>
-                  <img src="${asset(post.image)}" alt="" loading="lazy" />
+                  <img src="${asset(mainImage.src)}" alt="${mainImage.alt}" loading="lazy" />
                   <span>
                     <strong>${post.title}</strong>
                     <small>${formatDate(post.date)}</small>
                   </span>
                 </a>
-              `
-            )
+              `;
+            })
             .join("")}
         </div>
       </section>
@@ -384,6 +412,7 @@ function renderPostDetail(path) {
   if (!post) return renderNotFound();
 
   const category = categoryById(post.categoryId);
+  const mainImage = postMainImage(post);
   setMeta(`${post.title} | Guia: Compre Sem Erro`, post.excerpt);
 
   return `
@@ -405,8 +434,9 @@ function renderPostDetail(path) {
         </div>
       </header>
       <div class="article-hero">
-        <img src="${asset(post.image)}" alt="Ilustração do review: ${post.title}" />
+        <img src="${asset(mainImage.src)}" alt="${mainImage.alt}" />
       </div>
+      ${renderArticleGallery(post)}
       <div class="article-layout">
         <div class="article-body" data-article-body>
           ${post.contentPath ? renderArticleLoading() : renderFallbackArticle(post)}
@@ -423,6 +453,25 @@ function renderPostDetail(path) {
         </aside>
       </div>
     </article>
+  `;
+}
+
+function renderArticleGallery(post) {
+  const images = postImages(post);
+  if (images.length <= 1) return "";
+
+  return `
+    <section class="article-gallery" aria-label="Galeria de imagens do produto">
+      ${images
+        .map(
+          (image) => `
+            <figure>
+              <img src="${asset(image.src)}" alt="${image.alt}" loading="lazy" />
+            </figure>
+          `
+        )
+        .join("")}
+    </section>
   `;
 }
 

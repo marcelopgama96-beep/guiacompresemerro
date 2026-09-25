@@ -38,17 +38,17 @@ Não é a melhor escolha para quem quer uma máquina totalmente automática, cen
 - Eficiência energética A.
 - Abertura superior, prática para carregar e descarregar.
 - Dimensões compactas para lavanderias pequenas.
-- Garantia de fábrica informada de 12 meses.
-- Loja oficial Colormaq no Mercado Livre, segundo a página consultada.
+- Garantia de fábrica de 12 meses.
+- Quando aparece vendido pela loja oficial Colormaq, passa mais confiança na compra.
 
 ## Pontos de atenção
 
 - É uma lavadora semiautomática, então parte da operação depende do usuário.
 - A entrada de água é manual.
 - Não é lava e seca.
-- A página consultada informa que não possui tecnologia inverter.
+- Não encontrei tecnologia inverter entre os recursos do modelo.
 - A característica "qualidade de secagem" aparece com nota menor nas avaliações agregadas, o que reforça que a proposta principal é lavar, não substituir uma secadora.
-- Não há lavagem rápida informada nas características do produto.
+- Não considero uma boa escolha para quem procura uma lavagem rápida e totalmente automática.
 
 ## Especificações principais
 
@@ -61,18 +61,18 @@ Não é a melhor escolha para quem quer uma máquina totalmente automática, cen
 | Cor | Prata |
 | Capacidade de lavagem | 10 kg |
 | Tipo de abertura | Superior |
-| Programas de lavagem | 5 programas informados na página |
+| Programas de lavagem | 5 programas |
 | Uso de água | Água fria |
 | Tipo de carga de água | Manual |
 | Eficiência energética | A |
 | Tecnologia inverter | Não |
 | Lava e seca | Não |
 | Dimensões | 48,5 cm de largura x 96 cm de altura x 55,5 cm de profundidade |
-| Garantia | 12 meses de garantia de fábrica informada |
+| Garantia | 12 meses de garantia de fábrica |
 
 ## O que dizem as avaliações
 
-A página do Mercado Livre mostra avaliação geral de 4,7/5 baseada em 7.718 opiniões no momento da consulta. Nas características avaliadas, os compradores deram notas altas para custo-benefício e qualidade da lavagem, ambas em 4,7/5. O nível de ruído também aparece bem avaliado, com 4,6/5.
+No Mercado Livre, ele aparece com avaliação geral de 4,7/5 baseada em 7.718 opiniões. Nas características avaliadas, os compradores deram notas altas para custo-benefício e qualidade da lavagem, ambas em 4,7/5. O nível de ruído também aparece bem avaliado, com 4,6/5.
 
 O ponto mais fraco nas notas agregadas é a qualidade de secagem, com 4,0/5. Isso não chega a ser surpresa, porque o produto é um tanquinho semiautomático e não uma lava e seca. Para quem espera roupa quase pronta para o varal, esse detalhe merece atenção.
 
@@ -101,13 +101,3 @@ Eu evitaria este modelo se você:
 O Tanquinho Colormaq LCS 10kg é uma compra coerente para quem busca praticidade simples, bom custo-benefício e capacidade suficiente para uma rotina doméstica comum. Ele não tenta competir com máquinas automáticas completas, e essa é justamente a leitura correta: é um produto para lavar bem, ocupar pouco espaço e manter a operação descomplicada.
 
 Se o preço estiver competitivo e a voltagem escolhida for correta para sua casa, ele entra como uma opção forte entre tanquinhos de 10 kg.
-
-## Imagens de referência encontradas
-
-- Produto em vista frontal: https://carrefourbr.vtexassets.com/arquivos/ids/192755044/image-0.jpg?v=638845581750870000
-- Produto com tampa aberta: https://imgs.via.com.br/55003066/2xg.jpg
-- Interior do cesto: https://lojasguaibim.vtexassets.com/arquivos/ids/165032-800-auto?aspect=true&height=auto&v=638007487607200000&width=800
-
-## Observação editorial
-
-As informações foram extraídas e resumidas a partir da página do Mercado Livre e de páginas varejistas que listam o mesmo modelo. Preço, estoque, frete e condições de pagamento podem mudar sem aviso; confirme esses pontos no link de compra antes de publicar ou divulgar uma oferta.

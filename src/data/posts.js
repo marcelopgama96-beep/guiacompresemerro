@@ -43,7 +43,25 @@ export const posts = [
     readTime: "8 min",
     views: 7718,
     rating: 4.7,
-    image: "assets/products/tanquinho-colormaq.svg",
+    image: "https://carrefourbr.vtexassets.com/arquivos/ids/192755044/image-0.jpg?v=638845581750870000",
+    gallery: [
+      {
+        src: "https://carrefourbr.vtexassets.com/arquivos/ids/192755044/image-0.jpg?v=638845581750870000",
+        alt: "Tanquinho Colormaq LCS 10kg prata em vista frontal"
+      },
+      {
+        src: "https://imgs.via.com.br/55003066/2xg.jpg",
+        alt: "Tanquinho Colormaq LCS 10kg com tampa aberta"
+      },
+      {
+        src: "https://lojasguaibim.vtexassets.com/arquivos/ids/165032-800-auto?aspect=true&height=auto&v=638007487607200000&width=800",
+        alt: "Interior do cesto do Tanquinho Colormaq LCS 10kg"
+      },
+      {
+        src: "https://baianao.com.br/cdn/shop/files/WhatsApp-Image-2024-12-23-at-10.46.05_3f3be104-a6af-4500-83d2-f46cc89c4752.webp?v=1769631228",
+        alt: "Tanquinho Colormaq LCS 10kg com medidas externas"
+      }
+    ],
     contentPath: "posts/tanquinho-colormaq-lcs-10kg.md",
     affiliateUrl:
       "https://www.mercadolivre.com.br/tanquinho-colormaq-lavadora-roupas-semi-automatica-lcs-10kg-cor-prata/p/MLB14815390?pdp_filters=deal%3AMLB1578289-1&extra_comm=false&brand_comm=false#polycard_client=affiliates&wid=MLB6136385922&sid=affiliates",
