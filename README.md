@@ -39,7 +39,8 @@ Para criar um review completo:
 2. Cadastre o resumo em `src/data/posts.js`.
 3. No cadastro, preencha `contentPath` apontando para o Markdown, por exemplo `"posts/nome-do-produto.md"`.
 4. Use o link de afiliado em `affiliateUrl`.
-5. Cadastre imagens em `gallery` dentro de `src/data/posts.js` para elas aparecerem nos cards, carrossel e página do post.
+5. Escolha sempre uma imagem principal em `image`; ela aparece nos cards, no carrossel, na sidebar e no topo do post.
+6. Cadastre as demais imagens em `gallery`; elas aparecem automaticamente logo abaixo do primeiro paragrafo do review.
 
 Evite seções de bastidor como "Observação editorial" ou "Imagens de referência encontradas". O texto do post deve soar como review publicado pelo próprio Guia, com linguagem direta para o leitor.
 

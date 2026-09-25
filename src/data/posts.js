@@ -44,11 +44,8 @@ export const posts = [
     views: 7718,
     rating: 4.7,
     image: "https://carrefourbr.vtexassets.com/arquivos/ids/192755044/image-0.jpg?v=638845581750870000",
+    imageAlt: "Tanquinho Colormaq LCS 10kg prata em vista frontal",
     gallery: [
-      {
-        src: "https://carrefourbr.vtexassets.com/arquivos/ids/192755044/image-0.jpg?v=638845581750870000",
-        alt: "Tanquinho Colormaq LCS 10kg prata em vista frontal"
-      },
       {
         src: "https://imgs.via.com.br/55003066/2xg.jpg",
         alt: "Tanquinho Colormaq LCS 10kg com tampa aberta"

@@ -119,13 +119,12 @@ function postPath(post) {
   return `/post/${post.id}`;
 }
 
-function postImages(post) {
-  if (Array.isArray(post.gallery) && post.gallery.length) return post.gallery;
-  return [{ src: post.image, alt: `Imagem do review: ${post.title}` }];
+function postMainImage(post) {
+  return { src: post.image, alt: post.imageAlt || `Imagem principal do review: ${post.title}` };
 }
 
-function postMainImage(post) {
-  return postImages(post)[0];
+function postSecondaryImages(post) {
+  return Array.isArray(post.gallery) ? post.gallery : [];
 }
 
 function findPostById(id) {
@@ -291,7 +290,6 @@ function renderCarousel(items) {
       <article class="carousel-card" aria-live="polite">
         <div class="carousel-media">
           <img src="${asset(mainImage.src)}" alt="${mainImage.alt}" />
-          ${renderCarouselGallery(activePost)}
         </div>
         <div class="carousel-copy">
           <span class="category-pill" style="--pill-color: ${category.color}">${category.name}</span>
@@ -321,20 +319,6 @@ function renderCarousel(items) {
           .join("")}
       </div>
     </section>
-  `;
-}
-
-function renderCarouselGallery(post) {
-  const images = postImages(post);
-  if (images.length <= 1) return "";
-
-  return `
-    <div class="carousel-gallery" aria-label="Imagens do produto">
-      ${images
-        .slice(0, 4)
-        .map((image) => `<img src="${asset(image.src)}" alt="${image.alt}" loading="lazy" />`)
-        .join("")}
-    </div>
   `;
 }
 
@@ -436,7 +420,6 @@ function renderPostDetail(path) {
       <div class="article-hero">
         <img src="${asset(mainImage.src)}" alt="${mainImage.alt}" />
       </div>
-      ${renderArticleGallery(post)}
       <div class="article-layout">
         <div class="article-body" data-article-body>
           ${post.contentPath ? renderArticleLoading() : renderFallbackArticle(post)}
@@ -457,8 +440,8 @@ function renderPostDetail(path) {
 }
 
 function renderArticleGallery(post) {
-  const images = postImages(post);
-  if (images.length <= 1) return "";
+  const images = postSecondaryImages(post);
+  if (!images.length) return "";
 
   return `
     <section class="article-gallery" aria-label="Galeria de imagens do produto">
@@ -502,7 +485,7 @@ async function loadPostContent(path) {
     const response = await fetch(asset(post.contentPath));
     if (!response.ok) throw new Error("Conteudo indisponivel");
     const markdown = await response.text();
-    articleBody.innerHTML = markdownToHtml(markdown);
+    articleBody.innerHTML = markdownToHtml(markdown, post);
   } catch {
     articleBody.innerHTML = `
       <div class="empty-state">
@@ -513,11 +496,12 @@ async function loadPostContent(path) {
   }
 }
 
-function markdownToHtml(markdown) {
+function markdownToHtml(markdown, post) {
   const body = markdown.replace(/^---[\s\S]*?---\s*/, "").trim();
   const lines = body.split(/\r?\n/);
   const html = [];
   let index = 0;
+  let insertedGallery = false;
 
   while (index < lines.length) {
     const line = lines[index].trim();
@@ -572,6 +556,10 @@ function markdownToHtml(markdown) {
       index += 1;
     }
     html.push(`<p>${renderInline(paragraphs.join(" "))}</p>`);
+    if (!insertedGallery) {
+      html.push(renderArticleGallery(post));
+      insertedGallery = true;
+    }
   }
 
   return html.join("");
