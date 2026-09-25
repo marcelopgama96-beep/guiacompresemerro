@@ -1,0 +1,10 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Guia: Compre Sem Erro</title>
+  <desc id="desc">Icone minimalista com etiqueta de compra e marca de verificacao.</desc>
+  <rect width="160" height="160" rx="36" fill="#102126"/>
+  <path d="M48 34H102L126 58V126H48V34Z" fill="#F7FAF9"/>
+  <path d="M102 34V58H126" fill="#DFF4F0"/>
+  <circle cx="68" cy="58" r="8" fill="#0F766E"/>
+  <path d="M63 95L76 108L105 76" stroke="#0F766E" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M48 34H102L126 58V126H48V34Z" stroke="#F59E0B" stroke-width="6" stroke-linejoin="round"/>
+</svg>

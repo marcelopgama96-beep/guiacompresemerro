@@ -1,0 +1,19 @@
+{
+  "name": "guiacompresemerro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site Guia: Compre Sem Erro para reviews de produtos e links de afiliados.",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "start": "node scripts/dev-server.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "keywords": [
+    "reviews",
+    "afiliados",
+    "guia-de-compras"
+  ],
+  "author": "Guia: Compre Sem Erro",
+  "license": "MIT"
+}

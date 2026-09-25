@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marcelopgama96-beep.github.io/guiacompresemerro/sitemap.xml
